@@ -1,17 +1,17 @@
 <script setup>
-import { reactive, toRaw } from "vue";
+import { reactive, ref, toRaw } from "vue";
 
-const counter = reactive({
+const counter = ref({
   count: 0,
 });
 
 const incrementReactive = () => {
-  counter.count++;
+  counter.value.count++;
 };
 
 const incrementNonReactive = () => {
-  const rawCounter = toRaw(counter);
-  rawCounter.count++;
+  const rawCounter = counter;
+  rawCounter.value.count++;
 };
 </script>
 

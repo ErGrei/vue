@@ -9,7 +9,7 @@ const addNumberReactive = () => {
 };
 
 const addNumberNonReactive = () => {
-  list = [0];
+  list[3] = [0];
 };
 </script>
 

@@ -16,7 +16,7 @@
 
     console.log("Состояние count в клоне", clonedState.count);
 
-    // Object.assign(state, clonedState);
+  //   Object.assign(state, clonedState);
   };
   </script>
   
@@ -27,3 +27,4 @@
       <button @click="incrementNonReactive">Увеличить без реактивности</button>
     </div>
   </template>
+

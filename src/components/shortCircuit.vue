@@ -1,17 +1,16 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
-const state = reactive({
+const state = ref({
   count: 0,
 });
 
-let nonReactiveCount = state.count;
-
 const incrementReactive = () => {
-  state.count++;
+  state.value.count++;
 };
 
 const closure = () => {
+  let nonReactiveCount = state.value.count;
   console.log("Состояние count внутри замыкания:", nonReactiveCount);
   nonReactiveCount += 1;
 };
