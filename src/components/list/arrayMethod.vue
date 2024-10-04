@@ -1,26 +1,43 @@
 <script setup>
-import { reactive } from "vue";
+import { defineProps, defineEmits, } from "vue";
 
-let list = reactive([1, 2, 3]);
+const { titleBtn, counter, titleComponent, list } = defineProps([
+  "titleBtn",
+  "titleComponent",
+  "list",
+]);
+
+const emit = defineEmits([
+"addNumberReactive",
+"addNumberNonReactive",
+]);
 
 const addNumberReactive = () => {
-  const nextNumber = list[list.length - 1] + 1;
-  list.push(nextNumber);
+  emit("addNumberReactive");
+};
+const addNumberNonReactive = () => {
+  emit("addNumberNonReactive");
 };
 
-const addNumberNonReactive = () => {
-  list[3] = [0];
-};
+
+// const addNumberReactive = () => {
+//   const nextNumber = list[list.length - 1] + 1;
+//   list.push(nextNumber);
+// };
+
+// const addNumberNonReactive = () => {
+//   list[3] = [0];
+// };
 </script>
 
 <template>
   <div>
-    <h1>arrayMethod: {{ list }}</h1>
+    <h1>{{ titleComponent.arrayMethod }}: {{ list}}</h1>
 
-    <button @click="addNumberReactive">Добавить число реактивно</button>
+    <button @click="addNumberReactive">{{ titleBtn.reactive }}</button>
 
     <button @click="addNumberNonReactive">
-      Добавить число без реактивности
+      {{ titleBtn.nonReactive }}
     </button>
   </div>
 </template>

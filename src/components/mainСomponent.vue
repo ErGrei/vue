@@ -6,6 +6,8 @@ let counter = ref({
   count: 0,
 });
 
+let list = ref([1, 2, 3]);
+
 const titleBtn = {
   reactive: "Увеличить реактивно",
   nonReactive: "Увеличить без реактивности",
@@ -39,6 +41,30 @@ const disableReactivity = () => {
     count: 0,
   });
 };
+const closure = () => {
+  let nonReactiveCount = counter.value.count;
+  console.log("Состояние count внутри замыкания:", nonReactiveCount);
+  nonReactiveCount += 1;
+};
+
+const incrementNonReactiveClone = () => {
+  const clonedState = JSON.parse(JSON.stringify(counter.value));
+
+  clonedState.count++;
+
+  console.log("Состояние count в клоне", clonedState.count);
+
+  //   Object.assign(state, clonedState);
+};
+
+const addNumberReactive = () => {
+  const nextNumber = list.value[list.value.length - 1] + 1;
+  list.value.push(nextNumber);
+};
+
+const addNumberNonReactive = () => {
+  list.value[3] = 0;
+};
 </script>
 
 <template>
@@ -46,8 +72,13 @@ const disableReactivity = () => {
     :counter="counter"
     :titleBtn="titleBtn"
     :titleComponent="titleComponent"
+    :list="list"
     @incrementReactive="incrementReactive"
     @incrementNonReactive="incrementNonReactive"
     @disableReactivity="disableReactivity"
+    @closure="closure"
+    @incrementNonReactiveClone="incrementNonReactiveClone"
+    @addNumberReactive="addNumberReactive"
+    @addNumberNonReactive="addNumberNonReactive"
   />
 </template>

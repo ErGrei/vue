@@ -1,25 +1,55 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { defineProps, defineEmits } from "vue";
+import cloneObj from "./cloneObj.vue";
 
-const state = ref({
-  count: 0,
-});
+const { titleBtn, counter, titleComponent, list } = defineProps([
+  "titleBtn",
+  "counter",
+  "titleComponent",
+  "list",
+]);
+
+const emit = defineEmits([
+  "incrementReactive",
+  "closure",
+  "incrementNonReactiveClone",
+  "addNumberReactive",
+  "addNumberNonReactive",
+]);
 
 const incrementReactive = () => {
-  state.value.count++;
+  emit("incrementReactive");
 };
 
 const closure = () => {
-  let nonReactiveCount = state.value.count;
-  console.log("Состояние count внутри замыкания:", nonReactiveCount);
-  nonReactiveCount += 1;
+  emit("closure");
+};
+const incrementNonReactiveClone = () => {
+  emit("incrementNonReactiveClone");
+};
+
+const addNumberReactive = () => {
+  emit("addNumberReactive");
+};
+const addNumberNonReactive = () => {
+  emit("addNumberNonReactive");
 };
 </script>
 
 <template>
   <div>
-    <h1>shortCircuit: {{ state.count }}</h1>
-    <button @click="incrementReactive">Увеличить реактивно</button>
-    <button @click="closure">Увеличивается без реактивности</button>
+    <h1>{{ titleComponent.shortCircuit }}: {{ counter.count }}</h1>
+    <button @click="incrementReactive">{{ titleBtn.reactive }}</button>
+    <button @click="closure">{{ titleBtn.nonReactive }}</button>
   </div>
+  <cloneObj
+    :counter="counter"
+    :titleBtn="titleBtn"
+    :titleComponent="titleComponent"
+    :list="list"
+    @incrementReactive="incrementReactive"
+    @incrementNonReactiveClone="incrementNonReactiveClone"
+    @addNumberReactive="addNumberReactive"
+    @addNumberNonReactive="addNumberNonReactive"
+  />
 </template>

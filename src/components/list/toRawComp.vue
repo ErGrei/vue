@@ -2,13 +2,22 @@
 import { defineProps, defineEmits, ref, toRaw } from "vue";
 import markRaw from "./markRaw.vue";
 
-const { titleBtn, counter, titleComponent } = defineProps([
+const { titleBtn, counter, titleComponent, list } = defineProps([
   "titleBtn",
   "counter",
   "titleComponent",
+  "list",
 ]);
 
-const emit = defineEmits(["incrementReactive", "incrementNonReactive", "disableReactivity"]);
+const emit = defineEmits([
+  "incrementReactive",
+  "incrementNonReactive",
+  "disableReactivity",
+  "closure",
+  "incrementNonReactiveClone",
+  "addNumberReactive",
+  "addNumberNonReactive",
+]);
 
 const incrementReactive = () => {
   emit("incrementReactive");
@@ -19,6 +28,20 @@ const incrementNonReactive = () => {
 
 const disableReactivity = () => {
   emit("disableReactivity");
+};
+
+const closure = () => {
+  emit("closure");
+};
+
+const incrementNonReactiveClone = () => {
+  emit("incrementNonReactiveClone");
+};
+const addNumberReactive = () => {
+  emit("addNumberReactive");
+};
+const addNumberNonReactive = () => {
+  emit("addNumberNonReactive");
 };
 </script>
 
@@ -32,7 +55,12 @@ const disableReactivity = () => {
     :counter="counter"
     :titleBtn="titleBtn"
     :titleComponent="titleComponent"
+    :list="list"
     @incrementReactive="incrementReactive"
     @disableReactivity="disableReactivity"
+    @closure="closure"
+    @incrementNonReactiveClone="incrementNonReactiveClone"
+    @addNumberReactive="addNumberReactive"
+    @addNumberNonReactive="addNumberNonReactive"
   />
 </template>

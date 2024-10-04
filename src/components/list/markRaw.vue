@@ -1,34 +1,43 @@
 <script setup>
-import {  markRaw, defineProps} from 'vue';
+import { defineEmits, defineProps } from "vue";
+import shortCircuit from "./shortCircuit.vue";
 
-// let state = reactive({
-//   count: 0,
-// });
-// const incrementReactive = () => {
-//   state.count++;
-  
-// };
-
-const { titleBtn, counter, titleComponent } = defineProps([
+const { titleBtn, counter, titleComponent, list } = defineProps([
   "titleBtn",
   "counter",
   "titleComponent",
+  "list",
 ]);
 
-
-const emit = defineEmits(["incrementReactive", "disableReactivity"]);
+const emit = defineEmits([
+  "incrementReactive",
+  "disableReactivity",
+  "closure",
+  "incrementNonReactiveClone",
+  "addNumberReactive",
+  "addNumberNonReactive",
+]);
 
 const incrementReactive = () => {
   emit("incrementReactive");
 };
 
-
 const disableReactivity = () => {
   emit("disableReactivity");
 };
+const closure = () => {
+  emit("closure");
+};
+const incrementNonReactiveClone = () => {
+  emit("incrementNonReactiveClone");
+};
 
-
-
+const addNumberReactive = () => {
+  emit("addNumberReactive");
+};
+const addNumberNonReactive = () => {
+  emit("addNumberNonReactive");
+};
 </script>
 
 <template>
@@ -37,4 +46,15 @@ const disableReactivity = () => {
     <button @click="incrementReactive">{{ titleBtn.reactive }}</button>
     <button @click="disableReactivity">{{ titleBtn.nonReactive }}</button>
   </div>
+  <shortCircuit
+    :counter="counter"
+    :titleBtn="titleBtn"
+    :titleComponent="titleComponent"
+    :list="list"
+    @incrementReactive="incrementReactive"
+    @closure="closure"
+    @incrementNonReactiveClone="incrementNonReactiveClone"
+    @addNumberReactive="addNumberReactive"
+    @addNumberNonReactive="addNumberNonReactive"
+  />
 </template>

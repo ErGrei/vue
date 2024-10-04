@@ -1,30 +1,51 @@
-  <script setup>
-  import { reactive } from "vue";
-  
-  const state = reactive({
-    count: 0
-  });
+<script setup>
+import { defineProps, defineEmits } from "vue";
+import ArrayMethod from "./arrayMethod.vue";
 
-  const incrementReactive = () => {
-    state.count++;
-  };
- 
-  const incrementNonReactive = () => {
-    const clonedState = JSON.parse(JSON.stringify(state));
+const { titleBtn, counter, titleComponent, list } = defineProps([
+  "titleBtn",
+  "counter",
+  "titleComponent",
+  "list",
+]);
 
-    clonedState.count++;
+const emit = defineEmits([
+  "incrementReactive",
+  "incrementNonReactiveClone",
+  "addNumberReactive",
+  "addNumberNonReactive",
+]);
 
-    console.log("Состояние count в клоне", clonedState.count);
+const incrementReactive = () => {
+  emit("incrementReactive");
+};
 
-  //   Object.assign(state, clonedState);
-  };
-  </script>
-  
-  <template>
-    <div>
-      <h1>cloneObj: {{ state.count }}</h1>
-      <button @click="incrementReactive">Увеличить реактивно</button>
-      <button @click="incrementNonReactive">Увеличить без реактивности</button>
-    </div>
-  </template>
+const incrementNonReactiveClone = () => {
+  emit("incrementNonReactiveClone");
+};
 
+const addNumberReactive = () => {
+  emit("addNumberReactive");
+};
+const addNumberNonReactive = () => {
+  emit("addNumberNonReactive");
+};
+</script>
+
+<template>
+  <div>
+    <h1>{{ titleComponent.cloneObj }}: {{ counter.count }}</h1>
+    <button @click="incrementReactive">{{ titleBtn.reactive }}</button>
+    <button @click="incrementNonReactiveClone">
+      {{ titleBtn.nonReactive }}
+    </button>
+  </div>
+  <ArrayMethod
+    :titleBtn="titleBtn"
+    :titleComponent="titleComponent"
+    :list="list"
+    @incrementReactive="incrementReactive"
+    @addNumberReactive="addNumberReactive"
+    @addNumberNonReactive="addNumberNonReactive"
+  />
+</template>
