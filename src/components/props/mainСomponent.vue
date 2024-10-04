@@ -36,7 +36,7 @@ const disableReactivity = () => {
     count: counter.value.count + 1,
   });
 
-  console.log("Счётчик после отключения реактивности:", counter.count);
+  console.log("Счётчик после отключения реактивности:", counter.value.count);
   counter = ref({
     count: 0,
   });
